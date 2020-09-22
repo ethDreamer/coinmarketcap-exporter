@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from prometheus_client import start_http_server, Metric, REGISTRY
 from threading import Lock
 from cachetools import cached, TTLCache
@@ -25,7 +26,7 @@ log.addHandler(ch)
 cak = os.environ.get('COINMARKETCAP_API_KEY')
 # caching API for 10min
 # Note the api limits: https://pro.coinmarketcap.com/features
-cache_ttl = os.environ.get('CACHE_TTL', 3000)
+cache_ttl = os.environ.get('CACHE_TTL', 267)
 cache = TTLCache(maxsize=10000, ttl=cache_ttl)
 
 class CoinClient():
@@ -33,7 +34,7 @@ class CoinClient():
 
     self.url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
     self.headers = {'Accepts': 'application/json', 'X-CMC_PRO_API_KEY': cak}
-    self.parameters = {'start': '1', 'limit': '5000', 'convert': 'USD'}
+    self.parameters = {'start': '1', 'limit': '3', 'convert': 'USD'}
 
   @cached(cache)
   def tickers(self):
